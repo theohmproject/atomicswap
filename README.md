@@ -15,7 +15,7 @@ exists for the following coins and wallets:
 * Litecoin ([Litecoin Core](https://github.com/litecoin-project/litecoin))
 * Monacoin ([Monacoin Core](https://github.com/monacoinproject/monacoin))
 * Particl ([Particl Core](https://github.com/particl/particl-core))
-* Polis ([Polis Core](https://github.com/polispay/polis))
+* Qtum ([Qtum Core](https://github.com/qtumproject/qtum))
 * Vertcoin ([Vertcoin Core](https://github.com/vertcoin/vertcoin))
 * Viacoin ([Viacoin Core](https://github.com/viacoin/viacoin))
 * Zcoin ([Zcoin Core](https://github.com/zcoinofficial/zcoin))
@@ -45,17 +45,17 @@ how to use them safely, and an example swap between Decred and Bitcoin.
 
 ## Build instructions
 
-Pre-requirements:
+Requires [Go 1.11](https://golang.org/dl/) or later
 
-  - Go 1.9 or later
-  - [dep](https://github.com/golang/dep)
+- Clone atomicswap somewhere outside `$GOPATH`:
+  ```
+  $ git clone https://github.com/decred/atomicswap && cd atomicswap
+  ```
 
-```
-$ cd $GOPATH/src/github.com/decred
-$ git clone https://github.com/decred/atomicswap && cd atomicswap
-$ dep ensure
-$ go install ./cmd/...
-```
+- To install a single tool:
+  ```
+  $ cd cmd/dcratomicswap && go install
+  ```
 
 ## Theory
 
@@ -227,7 +227,7 @@ TsfWDVTAcsLaHUhHnLLKkGnZuJz2vkmM6Vr
 
 _Party B runs:_
 ```
-$ bitcoin-cli -testnet getnewaddress
+$ bitcoin-cli -testnet getnewaddress "" "legacy"
 n31og5QGuS28dmHpDH6PQD5wmVQ2K2spAG
 ```
 
@@ -389,10 +389,10 @@ here are the four transactions involved:
 
 | Description | Transaction |
 | - | - |
-| Bitcoin contract created by A | [346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88](https://www.blocktrail.com/tBTC/tx/346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88) |
-| Decred contract created by B | [a51a7ebc178731016f897684e8e6fbbd65798a84d0a0bd78fe2b53b8384fd918](https://testnet.decred.org/tx/a51a7ebc178731016f897684e8e6fbbd65798a84d0a0bd78fe2b53b8384fd918) |
-| A's Decred redemption | [53c2e8bafb8fe36d54bbb1884141a39ea4da83db30bdf3c98ef420cdb332b0e7](https://testnet.decred.org/tx/53c2e8bafb8fe36d54bbb1884141a39ea4da83db30bdf3c98ef420cdb332b0e7) |
-| B's Bitcoin redemption | [c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0](https://www.blocktrail.com/tBTC/tx/c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0) |
+| Bitcoin contract created by A | [346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88](https://blockstream.info/testnet/tx/346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88) |
+| Decred contract created by B | a51a7ebc178731016f897684e8e6fbbd65798a84d0a0bd78fe2b53b8384fd918 <br /> _(Decred testnet has been reset, link no longer available)_ |
+| A's Decred redemption | 53c2e8bafb8fe36d54bbb1884141a39ea4da83db30bdf3c98ef420cdb332b0e7 <br /> _(Decred testnet has been reset, link no longer available)_ |
+| B's Bitcoin redemption | [c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0](https://blockstream.info/testnet/tx/c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0) |
 
 If at any point either party attempts to fraud (e.g. creating an invalid
 contract, not revealing the secret and refunding, etc.) both parties have the
@@ -420,19 +420,20 @@ links to the four raw transactions published in the example:
 
 | Description | Link to raw transaction |
 | - | - |
-| Bitcoin contract created by A | https://test-insight.bitpay.com/api/rawtx/346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88 |
-| Decred contract created by B | https://testnet.decred.org/api/rawtx/a51a7ebc178731016f897684e8e6fbbd65798a84d0a0bd78fe2b53b8384fd918 |
-| A's Decred redemption | https://testnet.decred.org/api/rawtx/53c2e8bafb8fe36d54bbb1884141a39ea4da83db30bdf3c98ef420cdb332b0e7 |
-| B's Bitcoin redemption | https://test-insight.bitpay.com/api/rawtx/c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0 |
+| Bitcoin contract created by A | [346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88](https://test-insight.bitpay.com/api/rawtx/346f4901dff1d69197850289b481f4331913126a8886861e7d5f27e837e0fe88) |
+| Decred contract created by B | a51a7ebc178731016f897684e8e6fbbd65798a84d0a0bd78fe2b53b8384fd918 <br /> _(Decred testnet has been reset, link no longer available)_ |
+| A's Decred redemption | 53c2e8bafb8fe36d54bbb1884141a39ea4da83db30bdf3c98ef420cdb332b0e7 <br /> _(Decred testnet has been reset, link no longer available)_ |
+| B's Bitcoin redemption | [c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0](https://test-insight.bitpay.com/api/rawtx/c49e6fd0057b601dbb8856ad7b3fcb45df626696772f6901482b08df0333e5a0) |
 
 ## First mainnet DCR-LTC atomic swap
 
 | Description | Link to raw transaction |
 | - | - |
-| Decred contract created by A | [fdd72f5841414a9c8b4a188a98a4d484df98f84e1c120e1ed59a66e51e8ae90c](https://mainnet.decred.org/tx/fdd72f5841414a9c8b4a188a98a4d484df98f84e1c120e1ed59a66e51e8ae90c) |
+| Decred contract created by A | [fdd72f5841414a9c8b4a188a98a4d484df98f84e1c120e1ed59a66e51e8ae90c](https://dcrdata.decred.org/tx/fdd72f5841414a9c8b4a188a98a4d484df98f84e1c120e1ed59a66e51e8ae90c) |
 | Litecoin contract created by B | [550d1b2851f6f104e380aa3c2810ac272f8b6918140547c9717a78b1f4ff3469](https://insight.litecore.io/tx/550d1b2851f6f104e380aa3c2810ac272f8b6918140547c9717a78b1f4ff3469) |
 | A's Litecoin redemption | [6c27cffab8a86f1b3be1ebe7acfbbbdcb82542c5cfe7880fcca60eab36747037](https://insight.litecore.io/tx/6c27cffab8a86f1b3be1ebe7acfbbbdcb82542c5cfe7880fcca60eab36747037) |
-| B's Decred redemption | [49245425967b7e39c1eb27d261c7fe972675cccacff19ae9cc21f434ccddd986](https://mainnet.decred.org/tx/49245425967b7e39c1eb27d261c7fe972675cccacff19ae9cc21f434ccddd986) |
+| B's Decred redemption | [49245425967b7e39c1eb27d261c7fe972675cccacff19ae9cc21f434ccddd986](https://dcrdata.decred.org/tx/49245425967b7e39c1eb27d261c7fe972675cccacff19ae9cc21f434ccddd986) |
+
 ## License
 
 These tools are licensed under the [copyfree](http://copyfree.org) ISC License.
